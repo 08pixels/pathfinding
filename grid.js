@@ -148,7 +148,7 @@ function start() {
   renderGrid(grid)
 
   const executingPath = PathFinding(grid)
-  setInterval(() => executingPath(), 50)
+  setInterval(() => executingPath(), 30)
 }
 
 start()

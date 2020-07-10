@@ -1,20 +1,40 @@
-const gridHeight  = 10
-const gridWidth   = 12
+const gridHeight  = 20
+const gridWidth   = 30
 
-function staticGrid() {
+function populateGrid(grid) {
+  let height = grid.length
+  let width  = grid[0].length
 
-  return [
-    [-2,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [ 0,-1,-1,-1, 0, 0, 0, 0, 0, 0, 0, 0],
-    [ 0, 0, 0,-1, 0,-1,-1,-1,-1,-1, 0, 0],
-    [ 0,-1, 0,-1, 0,-1, 0, 0, 0, 0, 0, 0],
-    [ 0,-1, 0, 0, 0,-1, 0, 0, 0, 0, 0, 0],
-    [ 0,-1, 0,-1, 0,-1, 0, 0, 0, 0, 0, 0],
-    [ 0,-1, 0,-1, 0, 0, 0, 0, 0, 0, 0, 0],
-    [ 0,-1, 0,-1, 0, 0, 0, 0, 0, 0,-1, 0],
-    [ 0,-1, 0,-1, 0, 0, 0, 0, 0,-1,-1, 0],
-    [ 0, 0, 0,-1, 0, 0, 0, 0, 0, 0, 0,-3],
-  ]
+  let rateObstacles = Math.floor(height * width * 0.25)
+
+  let counterObstacles = 0
+
+  while(counterObstacles < rateObstacles) {
+    let guestRow = Math.trunc(Math.random() * height) 
+    let guestCol = Math.trunc(Math.random() * width)
+
+    if(grid[guestRow][guestCol] == 0) {
+      grid[guestRow][guestCol] = -1
+      ++counterObstacles
+    }
+  }
+
+  return grid
+}
+
+function generateGrid(height, width) {
+  grid = []
+
+  for(let i=0; i<height; i++) {
+    row = Array(width).fill(0)
+    grid.push(row)
+  }
+  
+  grid[0][0] = -2 // source
+  grid[height-1][width-1] = -3 // destine
+  grid = populateGrid(grid)
+
+  return grid
 }
 
 function emptyGrid() {
@@ -144,11 +164,11 @@ function renderGrid(grid) {
 }
 
 function start() {
-  const grid = staticGrid()
+  const grid = generateGrid(20, 30)
   renderGrid(grid)
 
   const executingPath = PathFinding(grid)
-  setInterval(() => executingPath(), 30)
+  setInterval(() => executingPath(), 10)
 }
 
 start()

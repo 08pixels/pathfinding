@@ -22,30 +22,25 @@ function populateGrid(grid) {
   return grid
 }
 
-function generateGrid(height, width) {
-  grid = []
+function emptyGrid(height, width) {
+  let grid = []
 
   for(let i=0; i<height; i++) {
     row = Array(width).fill(0)
     grid.push(row)
   }
-  
-  grid[0][0] = -2 // source
-  grid[height-1][width-1] = -3 // destine
-  grid = populateGrid(grid)
 
   return grid
 }
 
-function emptyGrid() {
-  let grid = []
+function generateGrid(height, width) {
+  
+  let grid = emptyGrid(height, width)
 
-  for(let i=0; i<gridHeight; ++i) {
-    let row = []
-    for(let j=0; j<gridWidth; ++j)
-      row.push(0)
-    grid.push(row)
-  }
+  grid[0][0] = -2 // source
+  grid[height-1][width-1] = -3 // destine
+  grid = populateGrid(grid)
+
   return grid
 }
 
@@ -64,7 +59,7 @@ function PathFinding(grid) {
 
   let queue   = []
   let path    = []
-  let parent  = emptyGrid()
+  let parent  = emptyGrid(grid.length, grid[0].length)
 
   // source position
   queue.push({x: 0, y: 0, distance: 0})
